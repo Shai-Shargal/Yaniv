@@ -1,11 +1,22 @@
 import { useGameStore } from "../store";
 
 const WinnerScreen = () => {
-  const { winner, players, history, newGame } = useGameStore();
+  const { winner: storeWinner, players, history, newGame } = useGameStore();
 
-  if (!winner) return null;
+  // Derive winner defensively in case the computed getter isn't available yet
+  const activeRemaining = players.filter((p) => !p.eliminated);
+  const winner =
+    storeWinner ?? (activeRemaining.length === 1 ? activeRemaining[0] : null);
 
   const totalRounds = history.length;
+
+  if (!winner) {
+    return (
+      <div className="text-center text-gray-600 dark:text-gray-400">
+        No winner yet.
+      </div>
+    );
+  }
 
   const copyStandings = () => {
     const standings = players
@@ -47,7 +58,7 @@ const WinnerScreen = () => {
                 key={player.id}
                 className={`flex items-center justify-between p-3 rounded-lg ${
                   player.id === winner.id
-                    ? "bg-success-50 dark:bg-success-900/20 border border-success-200 dark:border-success-700"
+                    ? "bg-success-800 dark:bg-success-900 border border-success-700 dark:border-success-700"
                     : player.eliminated
                     ? "bg-gray-100 dark:bg-gray-800"
                     : "bg-gray-50 dark:bg-gray-700"
@@ -68,7 +79,7 @@ const WinnerScreen = () => {
                   <span
                     className={`font-medium ${
                       player.id === winner.id
-                        ? "text-success-800 dark:text-success-200"
+                        ? "text-success-100 dark:text-success-100"
                         : player.eliminated
                         ? "text-gray-500 line-through"
                         : "text-gray-800 dark:text-gray-200"
@@ -80,7 +91,7 @@ const WinnerScreen = () => {
                 <span
                   className={`font-bold ${
                     player.id === winner.id
-                      ? "text-success-600"
+                      ? "text-success-100"
                       : player.eliminated
                       ? "text-gray-500"
                       : "text-gray-700 dark:text-gray-300"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useGameStore } from "../store";
 import type { RoundInput } from "../lib/scoring.js";
 

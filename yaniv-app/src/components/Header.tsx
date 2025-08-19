@@ -1,7 +1,7 @@
 import { useGameStore } from "../store";
 
 const Header = () => {
-  const { settings, updateSettings } = useGameStore();
+  const { settings, updateSettings, goBack } = useGameStore();
 
   const toggleSettings = () => {
     // For now, we'll just toggle RTL as a demo
@@ -12,9 +12,13 @@ const Header = () => {
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+        <button
+          onClick={goBack}
+          className="text-left text-2xl font-bold text-primary-600 dark:text-primary-400 hover:opacity-80"
+          aria-label="Go back"
+        >
           Yaniv Score
-        </h1>
+        </button>
 
         <button
           onClick={toggleSettings}

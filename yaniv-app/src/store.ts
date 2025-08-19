@@ -26,6 +26,7 @@ interface GameStore extends GameState {
   undoLastRound: () => void;
   newGame: (hardReset?: boolean) => void;
   updateSettings: (settings: Partial<GameState["settings"]>) => void;
+  goBack: () => void;
 
   // Computed state
   currentRoundInput: RoundInput | null;
@@ -198,6 +199,28 @@ export const useGameStore = create<GameStore>()(
           currentView: gameOver && winner ? "winner" : "players",
           activePlayers: next.filter((p) => !p.eliminated),
         });
+      },
+
+      goBack: () => {
+        const { currentView } = get();
+        if (currentView === "round-results") {
+          set({ currentRoundOutcome: null, currentView: "round-entry" });
+          return;
+        }
+        if (currentView === "round-entry") {
+          set({
+            currentRoundInput: null,
+            currentRoundOutcome: null,
+            currentView: "players",
+          });
+          return;
+        }
+        if (currentView === "winner") {
+          set({ currentView: "players" });
+          return;
+        }
+        // Default: go to players
+        set({ currentView: "players" });
       },
 
       undoLastRound: () => {

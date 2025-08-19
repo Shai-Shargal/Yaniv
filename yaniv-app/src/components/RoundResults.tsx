@@ -56,20 +56,20 @@ const RoundResults = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-              <div className="text-center p-2 bg-red-50 dark:bg-red-900/20 rounded">
-                <div className="font-semibold text-red-800 dark:text-red-200">
+              <div className="text-center p-2 bg-red-800 dark:bg-red-900 rounded">
+                <div className="font-semibold text-red-100 dark:text-red-100">
                   {getPlayerName(callerId)}
                 </div>
-                <div className="text-red-600 dark:text-red-400">
+                <div className="text-red-100 dark:text-red-200">
                   +30 + hand sum penalty
                 </div>
               </div>
 
-              <div className="text-center p-2 bg-green-50 dark:bg-green-900/20 rounded">
-                <div className="font-semibold text-green-800 dark:text-green-200">
+              <div className="text-center p-2 bg-green-800 dark:bg-green-900 rounded">
+                <div className="font-semibold text-green-100 dark:text-green-100">
                   {getPlayerName(asafBy)}
                 </div>
-                <div className="text-green-600 dark:text-green-400">
+                <div className="text-green-100 dark:text-green-200">
                   Hand sum penalty (lowest)
                 </div>
               </div>
@@ -83,11 +83,11 @@ const RoundResults = () => {
             </div>
           </div>
         ) : (
-          <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
-            <div className="font-semibold text-blue-800 dark:text-blue-200">
+          <div className="p-3 bg-blue-800 dark:bg-blue-900 border border-blue-700 dark:border-blue-700 rounded-lg">
+            <div className="font-semibold text-blue-100 dark:text-blue-100">
               ✅ No Asaf
             </div>
-            <div className="text-sm text-blue-700 dark:text-blue-300">
+            <div className="text-sm text-blue-100 dark:text-blue-200">
               {getPlayerName(callerId)} had the lowest sum - everyone gets their
               hand sum as penalty
             </div>
