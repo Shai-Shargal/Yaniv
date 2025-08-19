@@ -45,11 +45,11 @@ const RoundResults = () => {
 
         {asafBy ? (
           <div className="space-y-3">
-            <div className="p-3 bg-warning-50 dark:bg-warning-900/20 border border-warning-200 dark:border-warning-700 rounded-lg">
-              <div className="font-semibold text-warning-800 dark:text-warning-200">
+            <div className="p-3 bg-warning-800 dark:bg-warning-900 border border-warning-700 dark:border-warning-700 rounded-lg">
+              <div className="font-semibold text-warning-100 dark:text-warning-100">
                 🎯 Asaf occurred!
               </div>
-              <div className="text-sm text-warning-700 dark:text-warning-300">
+              <div className="text-sm text-warning-200 dark:text-warning-200">
                 {getPlayerName(callerId)} called Yaniv but{" "}
                 {getPlayerName(asafBy)} had a lower sum
               </div>
@@ -194,12 +194,12 @@ const RoundResults = () => {
               return (
                 <div
                   key={player.id}
-                  className="p-3 bg-success-50 dark:bg-success-900/20 border border-success-200 dark:border-success-700 rounded-lg"
+                  className="p-3 bg-success-800 dark:bg-success-900 border border-success-700 dark:border-success-700 rounded-lg"
                 >
-                  <div className="font-semibold text-success-800 dark:text-success-200">
+                  <div className="font-semibold text-success-100 dark:text-success-100">
                     🎉 {player.name} hit exact {newTotal}!
                   </div>
-                  <div className="text-sm text-success-700 dark:text-success-300">
+                  <div className="text-sm text-success-200 dark:text-success-200">
                     Total reset to 0
                   </div>
                 </div>
@@ -211,12 +211,12 @@ const RoundResults = () => {
               return (
                 <div
                   key={player.id}
-                  className="p-3 bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-700 rounded-lg"
+                  className="p-3 bg-danger-800 dark:bg-danger-900 border border-danger-700 dark:border-danger-700 rounded-lg"
                 >
-                  <div className="font-semibold text-danger-800 dark:text-danger-200">
+                  <div className="font-semibold text-danger-100 dark:text-danger-100">
                     💀 {player.name} eliminated!
                   </div>
-                  <div className="text-sm text-danger-700 dark:text-danger-300">
+                  <div className="text-sm text-danger-200 dark:text-danger-200">
                     Total exceeded 100 ({newTotal})
                   </div>
                 </div>

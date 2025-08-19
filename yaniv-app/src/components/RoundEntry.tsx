@@ -102,8 +102,20 @@ const RoundEntry = () => {
                   onChange={(e) =>
                     handleSumChange(player.id, parseInt(e.target.value) || 0)
                   }
+                  onFocus={(e) => e.currentTarget.select()}
+                  onKeyDown={(e) => {
+                    const key = e.key;
+                    if (
+                      /^[0-9]$/.test(key) &&
+                      (input.sums[player.id] || 0) === 0
+                    ) {
+                      e.preventDefault();
+                      handleSumChange(player.id, parseInt(key));
+                    }
+                  }}
+                  inputMode="numeric"
+                  step={1}
                   className="input w-20 text-center"
-                  placeholder="0"
                 />
                 <span className="text-gray-500">pts</span>
               </div>
