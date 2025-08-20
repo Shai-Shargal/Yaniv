@@ -16,7 +16,7 @@ const PlayersView = () => {
   const [editingName, setEditingName] = useState("");
 
   const handleAddPlayer = () => {
-    if (newPlayerName.trim() && players.length < 8) {
+    if (newPlayerName.trim() && players.length < 16) {
       addPlayer(newPlayerName);
       setNewPlayerName("");
     }
@@ -81,15 +81,15 @@ const PlayersView = () => {
           />
           <button
             onClick={handleAddPlayer}
-            disabled={!newPlayerName.trim() || players.length >= 8}
+            disabled={!newPlayerName.trim() || players.length >= 16}
             className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Add
           </button>
         </div>
-        {players.length >= 8 && (
+        {players.length >= 16 && (
           <p className="text-sm text-gray-500 mt-2">
-            Maximum 8 players reached
+            Maximum 16 players reached
           </p>
         )}
       </div>
@@ -98,7 +98,7 @@ const PlayersView = () => {
       {players.length > 0 && (
         <div className="card p-4">
           <h3 className="text-lg font-semibold mb-4">
-            Current Players ({players.length}/8)
+            Current Players ({players.length}/16)
           </h3>
           <div className="space-y-2">
             {players.map((player, index) => (

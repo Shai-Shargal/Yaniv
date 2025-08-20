@@ -85,7 +85,7 @@ export const useGameStore = create<GameStore>()(
       // Actions
       addPlayer: (name: string) => {
         const { players } = get();
-        if (players.length >= 8) return; // Max 8 players
+        if (players.length >= 16) return; // Max 16 players
 
         const newPlayer: Player = {
           id: generateId(),
