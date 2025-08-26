@@ -1,18 +1,7 @@
 import { useGameStore } from "../store";
 
 const FooterBar = () => {
-  const {
-    players,
-    history,
-    undoLastRound,
-    newGame,
-    currentRoundInput,
-    currentRoundOutcome,
-  } = useGameStore();
-
-  const isInRound = !!(currentRoundInput || currentRoundOutcome);
-  const hasHistory = history.length > 0;
-  const hasActiveGame = players.length > 0;
+  const { players, history } = useGameStore();
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
