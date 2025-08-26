@@ -52,48 +52,61 @@ export function scoreRoundFromSums(
   yanivCallerId: string,
   opts: { asafOnTie?: boolean } = {}
 ): { penalties: Record<string, number>; asafBy: string | null } {
-  const { asafOnTie = false } = opts;
+  const { asafOnTie = true } = opts;
   if (!(yanivCallerId in sums)) throw new Error("yanivCallerId missing");
+
   const callerSum = sums[yanivCallerId];
+  const lowestSum = Math.min(...Object.values(sums));
 
-  const qualifies = (x: number, y: number) => (asafOnTie ? x <= y : x < y);
+  // Check if caller has the lowest score (including ties)
+  const callerHasLowest = callerSum === lowestSum;
 
-  // Find lowest non-caller that qualifies
+  // Check if there are multiple players with the lowest score (including caller)
+  const playersWithLowest = Object.values(sums).filter(
+    (sum) => sum === lowestSum
+  );
+  const isTie = playersWithLowest.length > 1;
+
   let asafBy: string | null = null;
-  let best = Infinity;
-  for (const [pid, sum] of Object.entries(sums)) {
-    if (pid === yanivCallerId) continue;
-    if (qualifies(sum, callerSum) && sum < best) {
-      best = sum;
-      asafBy = pid;
+
+  // If there's a tie for lowest score and caller is part of it, caller gets asaf
+  if (isTie && callerHasLowest) {
+    asafBy = yanivCallerId;
+  } else if (!callerHasLowest) {
+    // If caller doesn't have lowest, find non-caller with lowest score for asaf
+    let best = Infinity;
+    for (const [pid, sum] of Object.entries(sums)) {
+      if (pid === yanivCallerId) continue;
+      const qualifies = asafOnTie ? sum <= callerSum : sum < callerSum;
+      if (qualifies && sum < best) {
+        best = sum;
+        asafBy = pid;
+      }
     }
   }
 
   const penalties: Record<string, number> = {};
 
-  // Check if Yaniv caller has the lowest score
-  const allSums = Object.values(sums);
-  const lowestSum = Math.min(...allSums);
-  const yanivCallerWins = callerSum === lowestSum;
-
-  if (asafBy) {
-    // Asaf occurred - someone else had a lower or equal score
+  if (asafBy === yanivCallerId) {
+    // Caller gets asaf (penalty): 30 + their sum
     for (const [pid, sum] of Object.entries(sums)) {
-      if (pid === yanivCallerId)
-        penalties[pid] = 30 + sum; // Yaniv caller gets 30 + their hand sum
-      else penalties[pid] = sum; // Everyone else gets their hand sum as penalty
+      if (pid === yanivCallerId) {
+        penalties[pid] = 30 + sum;
+      } else {
+        penalties[pid] = sum;
+      }
     }
-  } else if (yanivCallerWins) {
-    // Yaniv caller wins - they get 0, others get their sum
+  } else if (asafBy) {
+    // Someone else gets asaf: caller gets 30 + sum, asaf player gets 0, others get their sums
     for (const [pid, sum] of Object.entries(sums)) {
-      if (pid === yanivCallerId)
-        penalties[pid] = 0; // Yaniv caller gets 0 (wins!)
-      else penalties[pid] = sum; // Others get their hand sum as penalty
+      if (pid === yanivCallerId) penalties[pid] = 30 + sum;
+      else if (pid === asafBy) penalties[pid] = 0;
+      else penalties[pid] = sum;
     }
   } else {
-    // No Asaf and Yaniv caller doesn't win - everyone gets their sum
+    // Caller wins: 0 for caller, others get their sums
     for (const [pid, sum] of Object.entries(sums)) {
-      penalties[pid] = sum;
+      penalties[pid] = pid === yanivCallerId ? 0 : sum;
     }
   }
 

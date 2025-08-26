@@ -31,20 +31,22 @@ describe("scoreRoundFromSums", () => {
     });
   });
 
-  test("asaf on tie disabled by default", () => {
+  test("asaf on tie always occurs now", () => {
     const playersWithTie = { alice: 5, bob: 5, charlie: 8 };
     const result = scoreRoundFromSums(playersWithTie, "alice");
-    expect(result.asafBy).toBeNull(); // no asaf on tie
+    expect(result.asafBy).toBe("bob"); // asaf occurs on tie
+    expect(result.penalties.alice).toBe(35); // 30 + 5
+    expect(result.penalties.bob).toBe(0); // lowest non-caller gets 0
   });
 
-  test("asaf on tie enabled", () => {
+  test("asaf on tie with asafOnTie option (no longer relevant)", () => {
     const playersWithTie = { alice: 5, bob: 5, charlie: 8 };
     const result = scoreRoundFromSums(playersWithTie, "alice", {
       asafOnTie: true,
     });
-    expect(result.asafBy).toBe("bob"); // asaf occurs on tie
-    expect(result.penalties.alice).toBe(30);
-    expect(result.penalties.bob).toBe(0);
+    expect(result.asafBy).toBe("bob"); // asaf occurs on tie regardless of option
+    expect(result.penalties.alice).toBe(35); // 30 + 5
+    expect(result.penalties.bob).toBe(0); // lowest non-caller gets 0
   });
 
   test("multiple players below caller - lowest gets 0", () => {
