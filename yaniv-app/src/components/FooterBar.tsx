@@ -22,23 +22,7 @@ const FooterBar = () => {
           <span>{history.length} rounds</span>
         </div>
 
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={undoLastRound}
-            disabled={!hasHistory || isInRound}
-            className="btn btn-secondary"
-          >
-            Undo
-          </button>
-
-          <button
-            onClick={() => newGame()}
-            disabled={!hasActiveGame || isInRound}
-            className="btn btn-primary"
-          >
-            New Game
-          </button>
-        </div>
+        <div className="flex items-center space-x-3"></div>
       </div>
     </div>
   );
